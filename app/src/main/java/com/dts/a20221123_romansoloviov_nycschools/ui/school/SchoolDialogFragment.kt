@@ -56,6 +56,7 @@ class SchoolDialogFragment(private val schoolName: SchoolName) : DialogFragment(
                 list.firstOrNull { it.dbn == schoolName.dbn }
             if (school != null) {
                 binding.tvLog.visibility = View.GONE
+                binding.tvTitle.text = school.schoolName
                 binding.tvReading.text = "Reading avg. SAT: " + school.reading
                 binding.tvWriting.text = "Writing avg. SAT: " + school.writing
                 binding.tvMath.text = "Math avg. SAT: " + school.math
