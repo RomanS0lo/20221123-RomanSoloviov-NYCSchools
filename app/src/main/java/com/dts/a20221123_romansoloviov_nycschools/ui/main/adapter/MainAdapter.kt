@@ -5,23 +5,25 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.dts.a20221123_romansoloviov_nycschools.R
+import com.dts.a20221123_romansoloviov_nycschools.data.model.SchoolName
 import com.dts.a20221123_romansoloviov_nycschools.databinding.CellSchoolBinding
 
-class MainAdapter: RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
+class MainAdapter : RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
 
-    inner class MainViewHolder(view: View): RecyclerView.ViewHolder(view){
+    inner class MainViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         private val binding: CellSchoolBinding = CellSchoolBinding.bind(view)
 
-        fun bind( schoolName: String, onClick: ((String) -> Unit)? = null){
-            binding.tvName.text = schoolName
+        fun bind(schoolName: SchoolName, onClick: ((SchoolName) -> Unit)? = null) {
+            binding.tvName.text = schoolName.schoolName
+            binding.tvLocation.text = schoolName.location
             binding.btnSchool.setOnClickListener {
                 onClick?.invoke(schoolName)
             }
         }
     }
 
-    var items = listOf<String>()
+    var items = listOf<SchoolName>()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -39,5 +41,5 @@ class MainAdapter: RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
 
     override fun getItemCount(): Int = items.size
 
-    var onClickListener: ((String) -> Unit)? = null
+    var onClickListener: ((SchoolName) -> Unit)? = null
 }

@@ -14,15 +14,16 @@ class NYCSchoolsApp : Application() {
     override fun onCreate() {
         super.onCreate()
         setupDI()
+        //Setup Timber for log
         Timber.plant(Timber.DebugTree())
     }
 
+    //Setup Koin
     private fun setupDI() {
         startKoin {
             androidLogger(Level.ERROR)
             androidContext(this@NYCSchoolsApp)
             modules(app, viewModels)
-
         }
     }
 }

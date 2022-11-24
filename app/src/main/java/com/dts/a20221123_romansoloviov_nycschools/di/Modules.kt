@@ -12,11 +12,7 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object Endpoints {
-    const val SCHOOLS_BASE_URL: String = "https://data.cityofnewyork.us/resource/s3k6-pzi2.json"
-    const val SAT_BASE_URL: String = "https://data.cityofnewyork.us/resource/"
-}
-
+//Module that responsible for logic
 val app = module {
     single { GsonBuilder().create() }
     single {
@@ -34,10 +30,11 @@ val app = module {
             .build()
     }
     single<ApiService> { get<Retrofit>().create(ApiService::class.java) }
-    single { RestApiService(get(), get()) }
+    single { RestApiService(get()) }
 }
 
+//Module that  responsible for view models
 val viewModels = module {
-    viewModel { MainViewModel() }
+    viewModel { MainViewModel(get()) }
     viewModel { SchoolViewModel(get()) }
 }

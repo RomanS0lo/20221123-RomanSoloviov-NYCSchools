@@ -10,11 +10,12 @@ import android.view.ViewGroup
 
 import androidx.fragment.app.DialogFragment
 import com.dts.a20221123_romansoloviov_nycschools.data.domain.utils.safeDismiss
+import com.dts.a20221123_romansoloviov_nycschools.data.model.SchoolName
 import com.dts.a20221123_romansoloviov_nycschools.databinding.DialogFragmentSchoolBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
-class SchoolDialogFragment(private val schoolName: String) : DialogFragment() {
+class SchoolDialogFragment(private val schoolName: SchoolName) : DialogFragment() {
 
     private lateinit var binding: DialogFragmentSchoolBinding
 
@@ -46,19 +47,27 @@ class SchoolDialogFragment(private val schoolName: String) : DialogFragment() {
 
     @SuppressLint("SetTextI18n")
     private fun setupObserver() {
+
+        // view subscribes for changes in ViewModel
         viewModel.onResultSAT().observe(this) { list ->
+            //comparing two lists to get proper SAT score to proper school
+            //some of them not in 2012 SAT results so its possible to no information provided
             val school =
-                list.firstOrNull { it.schoolName == schoolName }
+                list.firstOrNull { it.dbn == schoolName.dbn }
             if (school != null) {
+                binding.tvLog.visibility = View.GONE
                 binding.tvReading.text = "Reading avg. SAT: " + school.reading
                 binding.tvWriting.text = "Writing avg. SAT: " + school.writing
                 binding.tvMath.text = "Math avg. SAT: " + school.math
             } else {
-                Timber.d("Wrong school name")
+                binding.tvLog.visibility = View.VISIBLE
+                binding.tvLog.text = "No information provided"
+                Timber.d("Wrong school dbn")
             }
         }
     }
 
+    //logic for button close
     private fun setupClickListener() {
         binding.btnClose.setOnClickListener {
             safeDismiss()

@@ -4,5 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class SchoolName(
     @SerializedName("school_name")
-    val  schoolName :String
+    val  schoolName :String,
+    val dbn : String,
+    val location : String
 )

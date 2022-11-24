@@ -3,6 +3,8 @@ package com.dts.a20221123_romansoloviov_nycschools.data.domain.utils
 import android.util.Log
 import androidx.fragment.app.DialogFragment
 
+
+// Extension function for dialogFragment to safe close of dialog
 fun DialogFragment?.safeDismiss(allowStateLoss: Boolean = true) {
     this?.let { dialogFragment ->
         if (allowStateLoss) {
